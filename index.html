@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Student Life — Scroll-Cadence Engine</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.8;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding-bottom: 120px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Card Section Styling */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid #8b5cf6;
+        }
+        .card-cyan { border-left-color: #06b6d4; }
+        .card-pink { border-left-color: #ec4899; }
+        .card-emerald { border-left-color: #10b981; }
+        .card-amber { border-left-color: #f59e0b; }
+
+        h2 {
+            color: #312e81;
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 {
+            color: #4338ca;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #334155;
+            font-size: 16px;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        /* SVG Image Illustrations */
+        .banner-img {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin: 15px 0 25px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Enhanced Floating AI Dashboard at Bottom */
+        .ai-dashboard {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: #ffffff;
+            padding: 16px 25px;
+            border-radius: 50px;
+            font-family: 'Segoe UI', monospace;
+            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.4);
+            border: 2px solid #334155;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 620px;
+            justify-content: space-between;
+        }
+        .ai-badge {
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .badge-active {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+        .badge-skimmer {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+        .badge-waiting {
+            background: #475569;
+            color: #cbd5e1;
+        }
+        .metric-group {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+        .metric-item {
+            background: #1e293b;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        .metric-val {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .ai-dashboard {
+                min-width: 90%;
+                flex-direction: column;
+                border-radius: 20px;
+                gap: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Hero Title Banner -->
+        <div class="hero">
+            <h1>🚀 AI in Student Life: Shaping the Future of Learning</h1>
+            <p>Exploring how Artificial Intelligence transforms study routines, research workflows, productivity, and academic dynamics.</p>
+        </div>
+
+        <!-- Section 1: Personalized Learning -->
+        <div class="card card-cyan">
+            <h2>🎓 1. The Era of Personalized Learning</h2>
+            <p>Every student learns at a unique pace. Traditional classroom models often struggle to cater to varying learning speeds, leading to friction for both fast learners and students who require additional concept reinforcement.</p>
+            
+            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="800" height="220" fill="#e0f2fe"/>
+                <circle cx="150" cy="110" r="60" fill="#38bdf8" opacity="0.7"/>
+                <circle cx="400" cy="110" r="80" fill="#818cf8" opacity="0.6"/>
+                <circle cx="650" cy="110" r="50" fill="#f472b6" opacity="0.7"/>
+                <text x="400" y="118" font-size="22" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Adaptive AI Tutoring Engines</text>
+            </svg>
+
+            <p>Artificial Intelligence bridges this gap through adaptive learning platforms. Intelligent tutoring systems analyze individual problem-solving histories, pinpoint exact knowledge gaps, and dynamically tailor practice sets to match student mastery levels.</p>
+            <ul>
+                <li>🧠 <strong>Custom Learning Curves:</strong> Intelligent algorithms adjust task difficulty dynamically based on real-time speed and accuracy.</li>
+                <li>🎯 <strong>Targeted Remediation:</strong> Automatically generates supplemental visual guides or code walk-throughs for weak concepts.</li>
+                <li>⏱️ <strong>24/7 Virtual Tutors:</strong> Instant feedback on complex assignments without waiting for office hours.</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Automated Research & Summarization -->
+        <div class="card card-pink">
+            <h2>📚 2. Research Acceleration & Cognitive Support</h2>
+            <p>Modern undergraduate and graduate studies demand sifting through dense academic papers, documentation, and technical repositories. AI-powered literature review tools allow students to digest long-form information efficiently.</p>
+
+            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="800" height="220" fill="#fce7f3"/>
+                <rect x="100" y="40" width="180" height="140" rx="10" fill="#f472b6" opacity="0.8"/>
+                <rect x="310" y="40" width="180" height="140" rx="10" fill="#ec4899" opacity="0.8"/>
+                <rect x="520" y="40" width="180" height="140" rx="10" fill="#db2777" opacity="0.8"/>
+                <text x="400" y="120" font-size="22" font-weight="bold" fill="#831843" text-anchor="middle">Automated Synthesis & Citation Graphs</text>
+            </svg>
+
+            <p>Large Language Models (LLMs) act as research copilots—summarizing key methodologies, extracting core dataset statistics, and highlighting cross-references across hundreds of published engineering papers in seconds.</p>
+            <h3>Key Advantages in Research:</h3>
+            <ul>
+                <li>🔍 <strong>Semantic Search:</strong> Searching research databases by conceptual meaning rather than exact keyword matches.</li>
+                <li>📊 <strong>Data Extraction:</strong> Rapid extraction of tables, formulas, and experimental benchmarks from PDF documents.</li>
+                <li>📝 <strong>Draft Optimization:</strong> Enhancing sentence structure, fixing grammar flow, and organizing bibliographies effortlessly.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3: AI in Coding & Technical Skill Building -->
+        <div class="card card-emerald">
+            <h2>💻 3. Coding Assistance & Developer Workflows</h2>
+            <p>For computer science and data science undergraduates, AI pair-programmers have redefined how programming concepts are mastered. Tools integrated directly into IDEs assist in code completion, bug diagnosis, and architecture planning.</p>
+
+            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="800" height="220" fill="#d1fae5"/>
+                <path d="M 150 180 L 250 40 L 350 180" stroke="#059669" stroke-width="12" fill="none" stroke-linecap="round"/>
+                <path d="M 450 40 L 550 180 L 650 40" stroke="#10b981" stroke-width="12" fill="none" stroke-linecap="round"/>
+                <text x="400" y="125" font-size="22" font-weight="bold" fill="#065f46" text-anchor="middle">Interactive Code Generation & Debugging</text>
+            </svg>
+
+            <p>Rather than acting as a replacement for understanding, AI pair-programming encourages deep learning when used correctly. Students can highlight tricky runtime stack traces and ask for step-by-step logic explanations before attempting implementation.</p>
+            <ul>
+                <li>⚡ <strong>Instant Syntax Assistance:</strong> Faster onboarding across new programming languages like Python, C++, and Rust.</li>
+                <li>🐞 <strong>Root-Cause Bug Analysis:</strong> Identifying logical errors, memory leaks, or boundary edge cases instantly.</li>
+                <li>🧪 <strong>Test Suite Generation:</strong> Automatically writing unit tests to verify algorithmic correctness.</li>
+            </ul>
+        </div>
+
+        <!-- Section 4: Productivity & Ethical Considerations -->
+        <div class="card card-amber">
+            <h2>⚖️ 4. Time Management & Academic Integrity</h2>
+            <p>As AI becomes deeply embedded in daily academic workflows, balancing productivity gains with personal skill development and academic integrity is essential for sustainable growth.</p>
+
+            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="800" height="220" fill="#fef3c7"/>
+                <polygon points="400,30 500,190 300,190" fill="#f59e0b" opacity="0.7"/>
+                <circle cx="400" cy="120" r="35" fill="#d97706"/>
+                <text x="400" y="127" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Ethics & Growth</text>
+            </svg>
+
+            <p>Students who succeed with AI view it as an intelligent amplifier rather than a substitute for original critical thinking. Maintaining strong core fundamentals ensures students remain confident problem-solvers capable of working independently.</p>
+            <ul>
+                <li>🗓️ <strong>Smart Scheduling:</strong> AI tools optimize study timetables and balance revision blocks based on upcoming exam dates.</li>
+                <li>💡 <strong>Critical Thinking First:</strong> Using AI to verify ideas, brainstorm perspectives, and validate logic rather than copy-pasting answers.</li>
+                <li>🛡️ <strong>Ethical Responsibility:</strong> Maintaining transparency, verifying facts independently, and respecting institutional guidelines.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Enhanced Floating AI Status Dashboard at Page Bottom -->
+    <div class="ai-dashboard">
+        <div id="aiBadge" class="ai-badge badge-waiting">
+            <span>⏳</span> Initializing AI Sensor...
+        </div>
+        
+        <div class="metric-group">
+            <div class="metric-item">
+                🎯 Model Accuracy: <span class="metric-val" id="aiAccuracy">94%</span>
+            </div>
+            <div class="metric-item">
+                📊 Pause Var (Std): <span class="metric-val" id="aiVariance">0.00</span>
+            </div>
+            <div class="metric-item">
+                ⚡ Avg Speed: <span class="metric-val" id="aiSpeed">0.00 px/ms</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scrollTelemetry = [];
+
+        // 1. Capture raw scroll dynamics (Pixels & Milliseconds)
+        window.addEventListener('scroll', () => {
+            const currentPosition = window.scrollY;
+            const currentTimestamp = performance.now();
+
+            scrollTelemetry.push({
+                position_y: Math.round(currentPosition),
+                timestamp_ms: parseFloat(currentTimestamp.toFixed(2))
+            });
+        });
+
+        // 2. Transmit data to Flask API and update bottom AI widget live
+        async function sendTelemetryToPython() {
+            if (scrollTelemetry.length === 0) return;
+
+            const payload = [...scrollTelemetry];
+            scrollTelemetry = []; 
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/telemetry', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success' && result.prediction !== undefined) {
+                    const badge = document.getElementById('aiBadge');
+                    const confidenceVal = result.confidence !== undefined ? result.confidence : 94;
+
+                    if (result.prediction === 1) {
+                        badge.className = 'ai-badge badge-active';
+                        badge.innerHTML = `<span>🟢</span> ACTIVE READER (${confidenceVal}%)`;
+                    } else {
+                        badge.className = 'ai-badge badge-skimmer';
+                        badge.innerHTML = `<span>🔴</span> SKIMMER / BOT DETECTED (${confidenceVal}%)`;
+                    }
+
+                    document.getElementById('aiAccuracy').innerText = confidenceVal + '%';
+                    document.getElementById('aiVariance').innerText = result.features.pause_variance_std;
+                    document.getElementById('aiSpeed').innerText = result.features.mean_velocity_px_ms + ' px/ms';
+                }
+            } catch (error) {
+                console.error("Error communicating with AI engine:", error);
+            }
+        }
+
+        // Trigger real-time prediction cycle every 3 seconds
+        setInterval(sendTelemetryToPython, 3000);
+    </script>
+</body>
+</html>
