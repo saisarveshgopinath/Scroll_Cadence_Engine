@@ -3,168 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI in Student Life — Scroll-Cadence Engine</title>
+    <title>Scroll Dynamics & Human Attention Engine</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Syne -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
+        /* Base Reset & Palette */
+        :root {
+            --bg-color: #faf8f5;
+            --card-bg: #ffffff;
+            --text-main: #1c1917;
+            --text-muted: #78716c;
+            --border-color: #e7e5e4;
+            --focus-bg: #121212;
+            --focus-text: #f5f5f4;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.8;
-            color: #1e293b;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding-bottom: 120px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.85;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            padding-bottom: 160px;
+            font-size: 19px;
+            transition: background-color 0.6s ease, color 0.6s ease;
         }
+
         .container {
-            max-width: 900px;
+            max-width: 880px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 24px;
         }
 
-        /* Hero Banner */
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-stretch: normal;
+            letter-spacing: -0.01em;
+            word-spacing: 0.05em;
+        }
+
+        /* Hero Header */
         .hero {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-            color: white;
-            padding: 50px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 32px;
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-        .hero p {
-            font-size: 18px;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
+            margin-bottom: 70px;
+            text-align: left;
+            border-bottom: 2px solid var(--text-main);
+            padding-bottom: 35px;
         }
 
-        /* Card Section Styling */
-        .card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            border-left: 6px solid #8b5cf6;
+        .hero-tag {
+            display: inline-block;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: #f5f5f4;
+            border: 1px solid #d6d3d1;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
-        .card-cyan { border-left-color: #06b6d4; }
-        .card-pink { border-left-color: #ec4899; }
-        .card-emerald { border-left-color: #10b981; }
-        .card-amber { border-left-color: #f59e0b; }
+
+        .hero h1 {
+            font-size: 42px;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: var(--text-muted);
+            max-width: 760px;
+        }
+
+        /* Editorial Cards */
+        .card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 48px;
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
 
         h2 {
-            color: #312e81;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
         }
+
         h3 {
-            color: #4338ca;
-            font-size: 18px;
-            margin: 20px 0 10px 0;
+            font-size: 22px;
+            margin: 32px 0 16px 0;
+            color: var(--text-main);
         }
+
         p {
-            margin-bottom: 15px;
-            color: #334155;
-            font-size: 16px;
+            margin-bottom: 20px;
+            color: #44403c;
+            font-size: 19px;
         }
+
         ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
+            padding-left: 24px;
+            margin-bottom: 24px;
         }
+
         li {
-            margin-bottom: 8px;
-            color: #475569;
+            margin-bottom: 12px;
+            color: #57534e;
         }
 
-        /* SVG Image Illustrations */
-        .banner-img {
-            width: 100%;
-            height: 220px;
+        /* Focus Mode Styles */
+        body.focus-mode {
+            background-color: var(--focus-bg) !important;
+            color: var(--focus-text) !important;
+        }
+
+        body.focus-mode .card {
+            background: #1c1c1e !important;
+            border-color: #2c2c2e !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        body.focus-mode h2, body.focus-mode h3, body.focus-mode p, body.focus-mode li {
+            color: #f5f5f4 !important;
+        }
+
+        body.focus-mode .hero {
+            border-bottom-color: #3a3a3c;
+        }
+
+        body.focus-mode .hero h1 {
+            color: #ffffff;
+        }
+
+        /* Skimmer Quick Box */
+        .skimmer-summary-box {
+            display: none;
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
             border-radius: 12px;
-            object-fit: cover;
-            margin: 15px 0 25px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 30px;
+            color: #9f1239;
+            font-size: 17px;
         }
 
-        /* Enhanced Floating AI Dashboard at Bottom */
+        /* Heatmap Badges */
+        .heatmap-badge {
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 6px 14px;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .heat-unread {
+            background: #f5f5f4;
+            color: #78716c;
+            border: 1px solid #e7e5e4;
+        }
+
+        .heat-skimmed {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .heat-focus {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Translucent Glassmorphism Status Bar */
         .ai-dashboard {
             position: fixed;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #0f172a;
-            color: #ffffff;
-            padding: 16px 25px;
-            border-radius: 50px;
-            font-family: 'Segoe UI', monospace;
-            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.4);
-            border: 2px solid #334155;
+            background: rgba(28, 25, 23, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #f5f5f4;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 20px;
-            min-width: 620px;
+            gap: 24px;
+            min-width: 680px;
             justify-content: space-between;
         }
+
         .ai-badge {
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-weight: bold;
+            font-family: 'Syne', sans-serif;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-weight: 700;
             font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
         }
+
         .badge-active {
-            background: linear-gradient(135deg, #16a34a, #22c55e);
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
-        }
-        .badge-skimmer {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-        }
-        .badge-waiting {
-            background: #475569;
-            color: #cbd5e1;
-        }
-        .metric-group {
-            display: flex;
-            gap: 15px;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
-        .metric-item {
-            background: #1e293b;
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-        }
-        .metric-val {
-            color: #38bdf8;
-            font-weight: bold;
+            background: rgba(220, 252, 231, 0.9);
+            color: #14532d;
         }
 
-        @media (max-width: 700px) {
+        .badge-skimmer {
+            background: rgba(254, 226, 226, 0.9);
+            color: #7f1d1d;
+        }
+
+        .badge-waiting {
+            background: rgba(255, 255, 255, 0.1);
+            color: #a8a29e;
+        }
+
+        .metric-group {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: #a8a29e;
+        }
+
+        .metric-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-val {
+            color: #f5f5f4;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
             .ai-dashboard {
                 min-width: 90%;
                 flex-direction: column;
                 border-radius: 20px;
-                gap: 10px;
-                padding: 15px;
+                gap: 12px;
+                padding: 18px;
             }
+            .hero h1 { font-size: 32px; }
+            h2 { font-size: 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
@@ -172,120 +286,180 @@
 
     <div class="container">
 
-        <!-- Hero Title Banner -->
-        <div class="hero">
-            <h1>🚀 AI in Student Life: Shaping the Future of Learning</h1>
-            <p>Exploring how Artificial Intelligence transforms study routines, research workflows, productivity, and academic dynamics.</p>
-        </div>
+        <!-- Editorial Header -->
+        <header class="hero">
+            <span class="hero-tag">Behavioral Telemetry Research</span>
+            <h1>AI in Academic Life & Cognitive Dynamics</h1>
+            <p>An exploration into how biological micro-pauses, interaction velocities, and spatial scrolling telemetry reveal human focus, comprehension patterns, and digital engagement.</p>
+        </header>
 
-        <!-- Section 1: Personalized Learning -->
-        <div class="card card-cyan">
-            <h2>🎓 1. The Era of Personalized Learning</h2>
-            <p>Every student learns at a unique pace. Traditional classroom models often struggle to cater to varying learning speeds, leading to friction for both fast learners and students who require additional concept reinforcement.</p>
+        <!-- Section 1 -->
+        <article class="card" id="section-1">
+            <h2>
+                <span>01. The Era of Personalized Learning</span>
+                <span class="heatmap-badge heat-unread" id="badge-section-1">Unread</span>
+            </h2>
             
-            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
-                <rect width="800" height="220" fill="#e0f2fe"/>
-                <circle cx="150" cy="110" r="60" fill="#38bdf8" opacity="0.7"/>
-                <circle cx="400" cy="110" r="80" fill="#818cf8" opacity="0.6"/>
-                <circle cx="650" cy="110" r="50" fill="#f472b6" opacity="0.7"/>
-                <text x="400" y="118" font-size="22" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Adaptive AI Tutoring Engines</text>
-            </svg>
+            <div class="skimmer-summary-box" id="skimmerSummary">
+                <strong>⚡ Quick Overview:</strong>
+                <ul style="margin-bottom:0; padding-left: 18px; margin-top: 10px;">
+                    <li>Adaptive AI tutoring engines adjust task difficulty dynamically based on user speed and accuracy.</li>
+                    <li>Identifies individual knowledge gaps automatically without manual teacher intervention.</li>
+                    <li>Replaces generic standardized curricula with personalized cognitive learning curves.</li>
+                </ul>
+            </div>
 
-            <p>Artificial Intelligence bridges this gap through adaptive learning platforms. Intelligent tutoring systems analyze individual problem-solving histories, pinpoint exact knowledge gaps, and dynamically tailor practice sets to match student mastery levels.</p>
+            <p>Every student learns at a unique pace. Traditional classroom models often struggle to cater to varying learning speeds, leading to friction for both fast learners who feel constrained and students who require additional concept reinforcement before moving forward.</p>
+            <p>Artificial Intelligence bridges this gap through adaptive learning platforms. Intelligent tutoring systems analyze individual problem-solving histories, pinpoint exact knowledge gaps, and dynamically tailor practice sets to match student mastery levels in real time.</p>
+            <p>By continuously tracking micro-interactions—such as the time spent analyzing specific proof steps or re-reading complex formulas—adaptive algorithms construct a high-resolution cognitive profile for each learner. This ensures that difficult topics are broken down with supplementary visual diagrams or interactive code walk-throughs before fatigue sets in.</p>
+            
+            <h3>Core Architectural Advantages:</h3>
             <ul>
-                <li>🧠 <strong>Custom Learning Curves:</strong> Intelligent algorithms adjust task difficulty dynamically based on real-time speed and accuracy.</li>
-                <li>🎯 <strong>Targeted Remediation:</strong> Automatically generates supplemental visual guides or code walk-throughs for weak concepts.</li>
-                <li>⏱️ <strong>24/7 Virtual Tutors:</strong> Instant feedback on complex assignments without waiting for office hours.</li>
+                <li><strong>Custom Learning Curves:</strong> Intelligent algorithms adjust problem difficulty dynamically based on real-time accuracy and response latencies.</li>
+                <li><strong>Targeted Remediation:</strong> Automatically generates supplemental visual guides, simplified analogies, or interactive code walk-throughs for weak concepts.</li>
+                <li><strong>24/7 Virtual Tutors:</strong> Provides instant feedback on complex programming assignments and mathematical proofs without waiting for faculty office hours.</li>
+                <li><strong>Retention Modeling:</strong> Predicts knowledge decay over time and schedules spaced-repetition revision blocks before upcoming semester evaluations.</li>
             </ul>
-        </div>
+        </article>
 
-        <!-- Section 2: Automated Research & Summarization -->
-        <div class="card card-pink">
-            <h2>📚 2. Research Acceleration & Cognitive Support</h2>
-            <p>Modern undergraduate and graduate studies demand sifting through dense academic papers, documentation, and technical repositories. AI-powered literature review tools allow students to digest long-form information efficiently.</p>
+        <!-- Section 2 -->
+        <article class="card" id="section-2">
+            <h2>
+                <span>02. Research Acceleration</span>
+                <span class="heatmap-badge heat-unread" id="badge-section-2">Unread</span>
+            </h2>
+            <p>Modern undergraduate and graduate studies demand sifting through dense academic papers, technical documentation, and complex research repositories. AI-powered literature review tools allow students to digest long-form academic information efficiently.</p>
+            <p>Large Language Models act as research copilots—summarizing key methodologies, extracting core dataset statistics, mapping citation networks, and highlighting cross-references across hundreds of published engineering papers in seconds.</p>
+            <p>Furthermore, semantic extraction engines allow researchers to query literature repositories using natural language conceptual questions rather than relying on brittle keyword matching. This significantly reduces the discovery phase of literature reviews, enabling students to focus on synthesizing original hypotheses and executing experimental frameworks.</p>
 
-            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
-                <rect width="800" height="220" fill="#fce7f3"/>
-                <rect x="100" y="40" width="180" height="140" rx="10" fill="#f472b6" opacity="0.8"/>
-                <rect x="310" y="40" width="180" height="140" rx="10" fill="#ec4899" opacity="0.8"/>
-                <rect x="520" y="40" width="180" height="140" rx="10" fill="#db2777" opacity="0.8"/>
-                <text x="400" y="120" font-size="22" font-weight="bold" fill="#831843" text-anchor="middle">Automated Synthesis & Citation Graphs</text>
-            </svg>
-
-            <p>Large Language Models (LLMs) act as research copilots—summarizing key methodologies, extracting core dataset statistics, and highlighting cross-references across hundreds of published engineering papers in seconds.</p>
-            <h3>Key Advantages in Research:</h3>
+            <h3>Key Advantages in Academic Research:</h3>
             <ul>
-                <li>🔍 <strong>Semantic Search:</strong> Searching research databases by conceptual meaning rather than exact keyword matches.</li>
-                <li>📊 <strong>Data Extraction:</strong> Rapid extraction of tables, formulas, and experimental benchmarks from PDF documents.</li>
-                <li>📝 <strong>Draft Optimization:</strong> Enhancing sentence structure, fixing grammar flow, and organizing bibliographies effortlessly.</li>
+                <li><strong>Semantic Search & Retrieval:</strong> Querying vast literature databases by conceptual intent rather than exact keyword string matching.</li>
+                <li><strong>Automated Data Extraction:</strong> Rapid extraction of structured tables, algorithmic pseudocode, and benchmark results directly from PDF publications.</li>
+                <li><strong>Draft & Syntax Optimization:</strong> Enhancing sentence structure, fixing logical grammar flow, and organizing LaTeX bibliographies effortlessly.</li>
+                <li><strong>Cross-Domain Synthesis:</strong> Drawing connections between disparate research fields to spark interdisciplinary insights and novel project architectures.</li>
             </ul>
-        </div>
+        </article>
 
-        <!-- Section 3: AI in Coding & Technical Skill Building -->
-        <div class="card card-emerald">
-            <h2>💻 3. Coding Assistance & Developer Workflows</h2>
-            <p>For computer science and data science undergraduates, AI pair-programmers have redefined how programming concepts are mastered. Tools integrated directly into IDEs assist in code completion, bug diagnosis, and architecture planning.</p>
+        <!-- Section 3 -->
+        <article class="card" id="section-3">
+            <h2>
+                <span>03. Developer Workflows</span>
+                <span class="heatmap-badge heat-unread" id="badge-section-3">Unread</span>
+            </h2>
+            <p>For computer science and data science undergraduates, AI pair-programmers have redefined how programming concepts, software architectures, and algorithmic design patterns are mastered. Tools integrated directly into IDEs assist in code completion, bug diagnosis, and system refactoring.</p>
+            <p>Rather than acting as a replacement for fundamental problem-solving skills, AI pair-programming encourages deep conceptual learning when leveraged correctly. Students can highlight tricky runtime stack traces, memory leaks, or complex asymptotic time complexities and request step-by-step logic explanations before attempting implementation.</p>
+            <p>Moreover, automated test suite generation tools allow student developers to establish unit testing habits early in their engineering journey, instilling test-driven development (TDD) best practices from project inception.</p>
 
-            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
-                <rect width="800" height="220" fill="#d1fae5"/>
-                <path d="M 150 180 L 250 40 L 350 180" stroke="#059669" stroke-width="12" fill="none" stroke-linecap="round"/>
-                <path d="M 450 40 L 550 180 L 650 40" stroke="#10b981" stroke-width="12" fill="none" stroke-linecap="round"/>
-                <text x="400" y="125" font-size="22" font-weight="bold" fill="#065f46" text-anchor="middle">Interactive Code Generation & Debugging</text>
-            </svg>
-
-            <p>Rather than acting as a replacement for understanding, AI pair-programming encourages deep learning when used correctly. Students can highlight tricky runtime stack traces and ask for step-by-step logic explanations before attempting implementation.</p>
+            <h3>Impact on Engineering Productivity:</h3>
             <ul>
-                <li>⚡ <strong>Instant Syntax Assistance:</strong> Faster onboarding across new programming languages like Python, C++, and Rust.</li>
-                <li>🐞 <strong>Root-Cause Bug Analysis:</strong> Identifying logical errors, memory leaks, or boundary edge cases instantly.</li>
-                <li>🧪 <strong>Test Suite Generation:</strong> Automatically writing unit tests to verify algorithmic correctness.</li>
+                <li><strong>Instant Language Onboarding:</strong> Accelerates the learning curve when transitioning across different languages like Python, C++, Java, and Rust.</li>
+                <li><strong>Root-Cause Bug Diagnosis:</strong> Pinpointing logical flaws, boundary edge cases, memory management issues, or unhandled exceptions instantly.</li>
+                <li><strong>Automated Test Generation:</strong> Automatically constructing unit and integration test suites to verify algorithmic correctness across varying input distributions.</li>
+                <li><strong>Code Refactoring & Optimization:</strong> Suggesting memory-efficient data structures and optimized algorithmic variants to improve runtime execution speed.</li>
             </ul>
-        </div>
+        </article>
 
-        <!-- Section 4: Productivity & Ethical Considerations -->
-        <div class="card card-amber">
-            <h2>⚖️ 4. Time Management & Academic Integrity</h2>
-            <p>As AI becomes deeply embedded in daily academic workflows, balancing productivity gains with personal skill development and academic integrity is essential for sustainable growth.</p>
+        <!-- Section 4 -->
+        <article class="card" id="section-4">
+            <h2>
+                <span>04. Academic Integrity</span>
+                <span class="heatmap-badge heat-unread" id="badge-section-4">Unread</span>
+            </h2>
+            <p>As artificial intelligence becomes deeply embedded in daily academic and developer workflows, balancing productivity gains with original critical thinking and institutional academic integrity is essential for sustainable technical growth.</p>
+            <p>Students who succeed with AI view these models as intelligent cognitive amplifiers rather than substitutes for baseline logic or original reasoning. Maintaining strong core fundamentals in discrete mathematics, computer systems, and machine learning theory ensures students remain confident problem-solvers capable of working independently.</p>
+            <p>Institutions are similarly evolving, shifting evaluation metrics toward oral viva defenses, hands-on architectural demonstrations, and real-time coding evaluations that measure a student's true comprehension rather than rote memorization.</p>
 
-            <svg class="banner-img" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
-                <rect width="800" height="220" fill="#fef3c7"/>
-                <polygon points="400,30 500,190 300,190" fill="#f59e0b" opacity="0.7"/>
-                <circle cx="400" cy="120" r="35" fill="#d97706"/>
-                <text x="400" y="127" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Ethics & Growth</text>
-            </svg>
-
-            <p>Students who succeed with AI view it as an intelligent amplifier rather than a substitute for original critical thinking. Maintaining strong core fundamentals ensures students remain confident problem-solvers capable of working independently.</p>
+            <h3>Principles for Responsible AI Adoption:</h3>
             <ul>
-                <li>🗓️ <strong>Smart Scheduling:</strong> AI tools optimize study timetables and balance revision blocks based on upcoming exam dates.</li>
-                <li>💡 <strong>Critical Thinking First:</strong> Using AI to verify ideas, brainstorm perspectives, and validate logic rather than copy-pasting answers.</li>
-                <li>🛡️ <strong>Ethical Responsibility:</strong> Maintaining transparency, verifying facts independently, and respecting institutional guidelines.</li>
+                <li><strong>Smart Study Scheduling:</strong> Leveraging intelligent planner tools to optimize daily revision timetables and balance workload spikes leading up to examinations.</li>
+                <li><strong>Critical Thinking First:</strong> Utilizing AI models to verify hypotheses, brainstorm edge cases, and validate architectural choices rather than copy-pasting solutions.</li>
+                <li><strong>Ethical Transparency:</strong> Maintaining clear disclosures regarding tool usage, verifying generated facts independently, and respecting university assessment policies.</li>
+                <li><strong>Foundational Mastery:</strong> Ensuring deep personal understanding of underlying algorithms, data structures, and mathematical proofs behind AI-generated outputs.</li>
             </ul>
-        </div>
+        </article>
+
+        <!-- Section 5: Real-Time Chart -->
+        <article class="card">
+            <h2>05. Telemetry & Cadence Stream</h2>
+            <p>Live observation of spatial scroll velocity (px/ms) and pause variance across rolling inference windows.</p>
+            <div style="width: 100%; height: 320px; margin-top: 24px;">
+                <canvas id="telemetryChart"></canvas>
+            </div>
+        </article>
 
     </div>
 
-    <!-- Enhanced Floating AI Status Dashboard at Page Bottom -->
+    <!-- Floating Translucent Status Bar -->
     <div class="ai-dashboard">
         <div id="aiBadge" class="ai-badge badge-waiting">
-            <span>⏳</span> Initializing AI Sensor...
+            <span>●</span> Sensor Active
         </div>
         
         <div class="metric-group">
             <div class="metric-item">
-                🎯 Model Accuracy: <span class="metric-val" id="aiAccuracy">94%</span>
+                Accuracy: <span class="metric-val" id="aiAccuracy">94%</span>
             </div>
             <div class="metric-item">
-                📊 Pause Var (Std): <span class="metric-val" id="aiVariance">0.00</span>
+                Pause Var: <span class="metric-val" id="aiVariance">0.00</span>
             </div>
             <div class="metric-item">
-                ⚡ Avg Speed: <span class="metric-val" id="aiSpeed">0.00 px/ms</span>
+                Velocity: <span class="metric-val" id="aiSpeed">0.00 px/ms</span>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript Engine -->
     <script>
+        const MAX_BUFFER_AGE_MS = 5000;
         let scrollTelemetry = [];
+        let consecutiveSkimCount = 0;
 
-        // 1. Capture raw scroll dynamics (Pixels & Milliseconds)
+        // Chart.js Setup
+        let telemetryChart;
+        window.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('telemetryChart').getContext('2d');
+            telemetryChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Speed (px/ms)',
+                            data: [],
+                            borderColor: '#15803d',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Pause Variance',
+                            data: [],
+                            borderColor: '#b91c1c',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#78716c' } },
+                        y: { type: 'linear', display: true, position: 'left', ticks: { color: '#15803d' } },
+                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#b91c1c' } }
+                    },
+                    plugins: {
+                        legend: { labels: { font: { family: 'Plus Jakarta Sans', size: 13 }, color: '#78716c' } }
+                    }
+                }
+            });
+        });
+
+        // 1. Capture Telemetry
         window.addEventListener('scroll', () => {
             const currentPosition = window.scrollY;
             const currentTimestamp = performance.now();
@@ -294,14 +468,16 @@
                 position_y: Math.round(currentPosition),
                 timestamp_ms: parseFloat(currentTimestamp.toFixed(2))
             });
+
+            const cutoffTime = currentTimestamp - MAX_BUFFER_AGE_MS;
+            scrollTelemetry = scrollTelemetry.filter(event => event.timestamp_ms >= cutoffTime);
         });
 
-        // 2. Transmit data to Flask API and update bottom AI widget live
+        // 2. Transmit Buffer to Flask API
         async function sendTelemetryToPython() {
-            if (scrollTelemetry.length === 0) return;
+            if (scrollTelemetry.length < 3) return;
 
             const payload = [...scrollTelemetry];
-            scrollTelemetry = []; 
 
             try {
                 const response = await fetch('http://127.0.0.1:5000/api/telemetry', {
@@ -315,26 +491,91 @@
                 if (result.status === 'success' && result.prediction !== undefined) {
                     const badge = document.getElementById('aiBadge');
                     const confidenceVal = result.confidence !== undefined ? result.confidence : 94;
+                    const skimmerSummary = document.getElementById('skimmerSummary');
 
                     if (result.prediction === 1) {
                         badge.className = 'ai-badge badge-active';
-                        badge.innerHTML = `<span>🟢</span> ACTIVE READER (${confidenceVal}%)`;
+                        badge.innerHTML = `<span>●</span> Active Reader (${confidenceVal}%)`;
+                        
+                        document.body.classList.add('focus-mode');
+                        if (skimmerSummary) skimmerSummary.style.display = 'none';
+                        consecutiveSkimCount = 0;
                     } else {
                         badge.className = 'ai-badge badge-skimmer';
-                        badge.innerHTML = `<span>🔴</span> SKIMMER / BOT DETECTED (${confidenceVal}%)`;
+                        badge.innerHTML = `<span>●</span> Skimmer / Bot (${confidenceVal}%)`;
+                        
+                        document.body.classList.remove('focus-mode');
+                        consecutiveSkimCount++;
+
+                        if (consecutiveSkimCount >= 1 && skimmerSummary) {
+                            skimmerSummary.style.display = 'block';
+                        }
                     }
 
                     document.getElementById('aiAccuracy').innerText = confidenceVal + '%';
                     document.getElementById('aiVariance').innerText = result.features.pause_variance_std;
                     document.getElementById('aiSpeed').innerText = result.features.mean_velocity_px_ms + ' px/ms';
+
+                    if (telemetryChart) {
+                        const timeLabel = new Date().toLocaleTimeString().split(' ')[0];
+                        
+                        if (telemetryChart.data.labels.length > 8) {
+                            telemetryChart.data.labels.shift();
+                            telemetryChart.data.datasets[0].data.shift();
+                            telemetryChart.data.datasets[1].data.shift();
+                        }
+
+                        telemetryChart.data.labels.push(timeLabel);
+                        telemetryChart.data.datasets[0].data.push(result.features.mean_velocity_px_ms);
+                        telemetryChart.data.datasets[1].data.push(result.features.pause_variance_std);
+                        telemetryChart.update();
+                    }
                 }
             } catch (error) {
-                console.error("Error communicating with AI engine:", error);
+                console.error("Error connecting to AI engine:", error);
             }
         }
 
-        // Trigger real-time prediction cycle every 3 seconds
         setInterval(sendTelemetryToPython, 3000);
+
+        // Feature 5: Dwell Time
+        const sectionDwellTimes = { 'section-1': 0, 'section-2': 0, 'section-3': 0, 'section-4': 0 };
+        let activeSectionId = null;
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    activeSectionId = entry.target.id;
+                } else if (activeSectionId === entry.target.id) {
+                    activeSectionId = null;
+                }
+            });
+        }, { root: null, threshold: 0.5 });
+
+        document.querySelectorAll('.card[id^="section-"]').forEach(card => {
+            sectionObserver.observe(card);
+        });
+
+        setInterval(() => {
+            if (activeSectionId && sectionDwellTimes[activeSectionId] !== undefined) {
+                sectionDwellTimes[activeSectionId] += 1;
+                updateHeatmapBadge(activeSectionId);
+            }
+        }, 1000);
+
+        function updateHeatmapBadge(sectionId) {
+            const dwellSeconds = sectionDwellTimes[sectionId];
+            const badge = document.getElementById(`badge-${sectionId}`);
+            if (!badge) return;
+
+            if (dwellSeconds >= 8) {
+                badge.className = 'heatmap-badge heat-focus';
+                badge.innerHTML = `High Focus (${dwellSeconds}s)`;
+            } else if (dwellSeconds >= 2) {
+                badge.className = 'heatmap-badge heat-skimmed';
+                badge.innerHTML = `Skimmed (${dwellSeconds}s)`;
+            }
+        }
     </script>
 </body>
 </html>
